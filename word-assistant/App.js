@@ -45,6 +45,7 @@ const MyApp = TabNavigator(
     }
   },
   {
+    initialRouteName: "Second",
     tabBarPosition: "bottom",
     animationEnabled: true,
     tabBarOptions: {

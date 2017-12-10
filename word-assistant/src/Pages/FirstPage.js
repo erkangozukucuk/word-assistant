@@ -1,5 +1,6 @@
 import React from "react";
 import { View, TextInput, FlatList, Text, Switch, Button } from "react-native";
+import { _ } from "lodash";
 import Header from "../Components/Common/Header";
 import Page from "../Components/Common/Page";
 
@@ -50,12 +51,12 @@ class FirstPage extends React.Component {
         <Page>
           <TextInput
             style={{
-              flex: 1,
-              borderWidth: 1,
               borderColor: "black",
-              paddingLeft: 10,
-              fontSize: 20
+              borderRadius: 10,
+              borderWidth: 1,
+              padding: 10
             }}
+            placeholder="Harfler"
             underlineColorAndroid="transparent"
             onChangeText={text => {
               this.setState({
@@ -128,7 +129,7 @@ class FirstPage extends React.Component {
                     color: item.id % 2 === 0 ? "black" : "orange"
                   }}
                 >
-                  {item.word}
+                  {_.capitalize(item.word)}
                 </Text>
               )}
               keyExtractor={item => item.id}
