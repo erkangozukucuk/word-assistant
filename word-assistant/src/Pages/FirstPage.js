@@ -15,7 +15,9 @@ class FirstPage extends React.Component {
     this.state = {
       searchText: "",
       filteredWords: null,
-      allWords: null
+      allWords: null,
+      onlyThisChars: true,
+      includeThisChars: false
     };
   }
 
@@ -63,14 +65,72 @@ class FirstPage extends React.Component {
             }}
             value={this.state.searchText}
           />
-          <View style={{ flex: 1, alignItems: "flex-start" }}>
-            <Switch value={true} onTintColor="#0072C4" tintColor="#0072C4" />
-            <Switch />
+          <View style={{ flex: 1, alignItems: "flex-start", marginTop: 10 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
+              <Switch
+                style={{ marginRight: 10 }}
+                value={this.state.onlyThisChars}
+                onValueChange={newValue =>
+                  this.setState({
+                    onlyThisChars: newValue,
+                    includeThisChars: !newValue
+                  })
+                }
+                onTintColor="black"
+                thumbTintColor="#FF4E40"
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: this.state.onlyThisChars ? "black" : "gray"
+                }}
+              >
+                Sadece bu harfler.
+              </Text>
+            </View>
+
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Switch
+                style={{ marginRight: 10 }}
+                value={this.state.includeThisChars}
+                onValueChange={newValue =>
+                  this.setState({
+                    includeThisChars: newValue,
+                    onlyThisChars: !newValue
+                  })
+                }
+                onTintColor="black"
+                thumbTintColor="#FF4E40"
+              />
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: this.state.includeThisChars ? "black" : "gray"
+                }}
+              >
+                Bu harfleri içeren.
+              </Text>
+            </View>
           </View>
           <View style={{ flex: 6 }}>
             <FlatList
               data={this.state.filteredWords || this.state.allWords}
-              renderItem={({ item }) => <Text>{item.word}</Text>}
+              renderItem={({ item }) => (
+                <Text
+                  style={{
+                    textShadowRadius: 20,
+                    fontSize: 18,
+                    color: item.id % 2 === 0 ? "black" : "orange"
+                  }}
+                >
+                  {item.word}
+                </Text>
+              )}
               keyExtractor={item => item.id}
             />
           </View>
