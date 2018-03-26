@@ -39,8 +39,29 @@ class FirstPage extends React.Component {
   }
 
   onValueChange(text) {
-    var a = this.state.allWords.filter(item => item.word.includes(text));
-    this.setState({ filteredWords: a });
+    if (this.state.onlyThisChars) {
+      // var pat = /text/;
+      var pat = new RegExp(text);
+      var a = [];
+      this.state.allWords.forEach(word => {
+        if (pat.test(word.word)) {
+          a.push(word);
+        }
+      });
+      this.setState({ filteredWords: a });
+    } else if (this.state.includeThisChars) {
+      var charArray = text.split("");
+      console.log(charArray);
+      var pat = new RegExp([charArray]);
+      var a = [];
+      this.state.allWords.forEach(word => {
+        if (pat.test(word.word)) {
+          a.push(word);
+        }
+      });
+      this.setState({ filteredWords: a });
+    }
+    // var a = this.state.allWords.filter(item => item.word.includes(text));
   }
 
   render() {
@@ -91,7 +112,7 @@ class FirstPage extends React.Component {
                   color: this.state.onlyThisChars ? "black" : "gray"
                 }}
               >
-                Sadece bu harfler.
+                Pattern
               </Text>
             </View>
 
@@ -125,8 +146,8 @@ class FirstPage extends React.Component {
                 <Text
                   style={{
                     textShadowRadius: 20,
-                    fontSize: 18,
-                    color: item.id % 2 === 0 ? "black" : "orange"
+                    fontSize: 18
+                    // color: item.id % 2 === 0 ? "black" : "orange"
                   }}
                 >
                   {_.capitalize(item.word)}
